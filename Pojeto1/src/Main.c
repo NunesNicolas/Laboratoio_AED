@@ -5,6 +5,7 @@
 
 #define NUM_VETORES 10
 #define RODADAS 10
+#define MAX_TAMANHO 10000
 
 void gerarVetorAleatorio(int v[], int n)
 {
@@ -48,7 +49,17 @@ int main()
     int tamanhos[] = {10, 100, 1000, 10000};
     int i, t, j;
     int escolha = 1;
-    Metrics metrica_total = {0, 0};
+    int vetores[NUM_VETORES][MAX_TAMANHO];
+    int copia[MAX_TAMANHO];
+
+    for (t = 0; t < 4; t++)
+    {
+        int n = tamanhos[t];
+        for (i = 0; i < NUM_VETORES; i++)
+        {
+            gerarVetorAleatorio(vetores[i], n);
+        }
+    }
 
     do
     {
@@ -58,20 +69,10 @@ int main()
         switch (escolha)
         {
         case 1:
-            metrica_total.comparacoes = 0;
-            metrica_total.trocas = 0;
+
             for (t = 0; t < 4; t++)
             {
                 int n = tamanhos[t];
-                int vetores[NUM_VETORES][n];
-                int copia[n];
-
-                // Gerar 10 vetores aleatórios de tamanho n
-                for (i = 0; i < NUM_VETORES; i++)
-                {
-                    gerarVetorAleatorio(vetores[i], n);
-                }
-
                 printf("Tamanho do vetor: %d\n", n);
 
                 for (i = 0; i < NUM_VETORES; i++)
@@ -79,6 +80,7 @@ int main()
                     double total_time = 0.0;
                     double min_time = __DBL_MAX__;
                     double max_time = 0.0;
+                    Metrics metrica_total = {0, 0};
 
                     for (j = 0; j < RODADAS; j++)
                     {
@@ -114,20 +116,9 @@ int main()
             break;
 
         case 2:
-            metrica_total.comparacoes = 0;
-            metrica_total.trocas = 0;
             for (t = 0; t < 4; t++)
             {
                 int n = tamanhos[t];
-                int vetores[NUM_VETORES][n];
-                int copia[n];
-
-                // Gerar 10 vetores aleatórios de tamanho n
-                for (i = 0; i < NUM_VETORES; i++)
-                {
-                    gerarVetorAleatorio(vetores[i], n);
-                }
-
                 printf("Tamanho do vetor: %d\n", n);
 
                 for (i = 0; i < NUM_VETORES; i++)
@@ -135,6 +126,7 @@ int main()
                     double total_time = 0.0;
                     double min_time = __DBL_MAX__;
                     double max_time = 0.0;
+                    Metrics metrica_total = {0, 0};
 
                     for (j = 0; j < RODADAS; j++)
                     {
@@ -172,7 +164,6 @@ int main()
         default:
             break;
         }
-
     } while (escolha != 0);
     return 0;
 }
