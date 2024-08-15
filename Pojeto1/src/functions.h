@@ -7,7 +7,7 @@ typedef struct
     long trocas;
 } Metrics;
 
- void bubbleOptimized(int arr[], int n, Metrics *metrica);
+void bubbleOptimized(int arr[], int n, Metrics *metrica);
 void bubbleSort(int v[], int n, Metrics *metrica);
 
- #endif
+#endif

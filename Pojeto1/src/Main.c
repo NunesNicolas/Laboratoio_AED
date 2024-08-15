@@ -32,29 +32,6 @@ void copiarVetor(int dest[], int src[], int n)
     }
 }
 
-// void basicCod(int v[], int n, Metrics *metrica)
-// {
-//     int i, continua, fim = n;
-//     int temp;
-//     do
-//     {
-//         continua = 0;
-//         for (i = 0; i < fim - 1; i++)
-//         {
-//             metrica->comparacoes++;
-//             if (v[i] > v[i + 1])
-//             {
-//                 temp = v[i];
-//                 v[i] = v[i + 1];
-//                 v[i + 1] = temp;
-//                 continua = i;
-//                 metrica->trocas++;
-//             }
-//         }
-//         fim--;
-//     } while (continua != 0);
-// };
-
 void printArray(int v[], int size)
 {
     int i;
@@ -79,7 +56,58 @@ int main()
 switch (escolha)
 {
 case 1:
-    printf("teste 1");
+      for (t = 0; t < 4; t++)
+        {
+            int n = tamanhos[t];
+            int vetores[NUM_VETORES][n];
+            int copia[n];
+
+            // Gerar 10 vetores aleatórios de tamanho n
+            for (i = 0; i < NUM_VETORES; i++)
+            {
+                gerarVetorAleatorio(vetores[i], n);
+            }
+
+            printf("Tamanho do vetor: %d\n", n);
+
+            for (i = 0; i < NUM_VETORES; i++)
+            {
+                double total_time = 0.0;
+                double min_time = __DBL_MAX__;
+                double max_time = 0.0;
+                Metrics metrica_total = {0, 0};
+
+                for (j = 0; j < RODADAS; j++)
+                {
+                    Metrics metrica = {0, 0};
+
+                    copiarVetor(copia, vetores[i], n);
+
+                    clock_t start, end;
+                    start = clock();
+                    bubbleSort(copia, n, &metrica);
+                    end = clock();
+
+                    double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    total_time += time_taken;
+
+                    if (time_taken < min_time)
+                        min_time = time_taken;
+                    if (time_taken > max_time)
+                        max_time = time_taken;
+
+                    metrica_total.comparacoes += metrica.comparacoes;
+                    metrica_total.trocas += metrica.trocas;
+                }
+
+                printf("Vetor %d:\n", i + 1);
+                printf("Tempo médio: %f segundos\n", total_time / RODADAS);
+                printf("Diferença entre maior e menor tempo: %f segundos\n", max_time - min_time);
+                printf("Média de comparações: %ld\n", metrica_total.comparacoes / RODADAS);
+                printf("Média de trocas: %ld\n", metrica_total.trocas / RODADAS);
+                printf("\n");
+            }
+        }
     break;
 
 case 2:

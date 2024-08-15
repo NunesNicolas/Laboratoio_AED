@@ -9,6 +9,7 @@
                 "-Wall",
                 "-Wextra",
                 "-g3",
+                "src/bubbleSort.c",
                 "src/Main.c",
                 "src/bubbleSortOptmized.c",
                 "-o",
