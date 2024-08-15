@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar C com avisos e debug",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-g3",
+                "src/Main.c",
+                "src/bubbleSortOptmized.c",
+                "-o",
+                "output/Main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Compila os arquivos Main.c e bubbleSortOptmized.c com avisos e informações de debug, gerando o executável em output/Main.exe."
+        }
+    ]
+}

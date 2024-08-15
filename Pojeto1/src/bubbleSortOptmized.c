@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "functions.h"
 
-#define NUM_VETORES 10
-#define RODADAS 10
-
-void optimizedCod(int arr[], int n, Metrics *metrica)
+void bubbleOptimized(int arr[], int n, Metrics *metrica)
 {
     int i, j;
     _Bool swapped = 0;
