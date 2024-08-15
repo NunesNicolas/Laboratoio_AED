@@ -63,7 +63,7 @@ int main()
 
     do
     {
-        printf("Qual método deseja utilizar? \n 1-Bubble padrão \n 2-Bubble otimizado \n");
+        printf("Qual método deseja utilizar? \n 1-Bubble padrão \n 2-Bubble otimizado  \n 3-Bucket \n");
         scanf("%d", &escolha);
 
         switch (escolha)
@@ -126,7 +126,7 @@ int main()
                     double total_time = 0.0;
                     double min_time = __DBL_MAX__;
                     double max_time = 0.0;
-                    Metrics metrica_total = {0, 0};
+                    Metrics metrica_total2 = {0, 0};
 
                     for (j = 0; j < RODADAS; j++)
                     {
@@ -147,15 +147,61 @@ int main()
                         if (time_taken > max_time)
                             max_time = time_taken;
 
-                        metrica_total.comparacoes += metrica.comparacoes;
-                        metrica_total.trocas += metrica.trocas;
+                        metrica_total2.comparacoes += metrica.comparacoes;
+                        metrica_total2.trocas += metrica.trocas;
                     }
 
                     printf("Vetor %d:\n", i + 1);
                     printf("Tempo médio: %f segundos\n", total_time / RODADAS);
                     printf("Diferença entre maior e menor tempo: %f segundos\n", max_time - min_time);
-                    printf("Média de comparações: %ld\n", metrica_total.comparacoes / RODADAS);
-                    printf("Média de trocas: %ld\n", metrica_total.trocas / RODADAS);
+                    printf("Média de comparações: %ld\n", metrica_total2.comparacoes / RODADAS);
+                    printf("Média de trocas: %ld\n", metrica_total2.trocas / RODADAS);
+                    printf("\n");
+                }
+            }
+            break;
+
+            case 3:
+            for (t = 0; t < 4; t++)
+            {
+                int n = tamanhos[t];
+                printf("Tamanho do vetor: %d\n", n);
+
+                for (i = 0; i < NUM_VETORES; i++)
+                {
+                    double total_time = 0.0;
+                    double min_time = __DBL_MAX__;
+                    double max_time = 0.0;
+                    Metrics metrica_total2 = {0, 0};
+
+                    for (j = 0; j < RODADAS; j++)
+                    {
+                        Metrics metrica = {0, 0};
+
+                        copiarVetor(copia, vetores[i], n);
+
+                        clock_t start, end;
+                        start = clock();
+                        bucketSort(copia, n, &metrica);
+                        end = clock();
+
+                        double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+                        total_time += time_taken;
+
+                        if (time_taken < min_time)
+                            min_time = time_taken;
+                        if (time_taken > max_time)
+                            max_time = time_taken;
+
+                        metrica_total2.comparacoes += metrica.comparacoes;
+                        metrica_total2.trocas += metrica.trocas;
+                    }
+
+                    printf("Vetor %d:\n", i + 1);
+                    printf("Tempo médio: %f segundos\n", total_time / RODADAS);
+                    printf("Diferença entre maior e menor tempo: %f segundos\n", max_time - min_time);
+                    printf("Média de comparações: %ld\n", metrica_total2.comparacoes / RODADAS);
+                    printf("Média de trocas: %ld\n", metrica_total2.trocas / RODADAS);
                     printf("\n");
                 }
             }

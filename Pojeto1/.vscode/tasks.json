@@ -11,7 +11,8 @@
                 "-g3",
                 "src/bubbleSort.c",
                 "src/Main.c",
-                "src/bubbleSortOptmized.c",
+                "src/bubbleSortOptimized.c",
+                "src/BucketSort.c",
                 "-o",
                 "output/Main.exe"
             ],
