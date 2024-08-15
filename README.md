@@ -1,1 +1,3 @@
-gcc -Wall -Wextra -g3 src/Main.c src/bubbleSortOptmized.c -o output/Main.exe
+Comando para gerar o Executavel Projeto1: (é parar vir gerado já, mas caso não venha)
+- abra o terminal na pasta Projeto1
+- gcc -Wall -Wextra -g3 src/Main.c src/bubbleSortOptimized.c src/bubbleSort.c src/BucketSort.c src/BucketSortOptimized.c -o output/Main.exe
