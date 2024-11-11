@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "functions.h"
 
-int elmA[5] = {12, 34, 44, 75, 99};
-int elmB[5] = {25, 27, 41, 88, 92};
+int elmA[] = {12, 24, 34, 44, 75, 99};
+int elmB[] = {24, 25, 27, 44, 88, 92};
 
 
 struct Node {
@@ -49,14 +49,18 @@ printf("[%d]",elmB[i]);
 }
     do{
 
-printf("\n 1-unir    9-finalizar \n");
+printf("\n 1-unir  2-intersecao   9-finalizar \n");
 scanf("%d", &option);
 
 switch (option)
 {
 case 1:
-   uniao(&head, elmA, sizeof(elmA) / sizeof(elmA[0]),elmB, sizeof(elmA) / sizeof(elmA[0]));
+   uniao(&head, elmA, sizeof(elmA) / sizeof(elmA[0]),elmB, sizeof(elmB) / sizeof(elmB[0]));
     break;
+
+case 2:
+ intersecao(&head, elmA, elmB, sizeof(elmA) / sizeof(elmA[0]), sizeof(elmB) / sizeof(elmB[0]));
+break;
 
 case 9:
 printf("finalizando...");

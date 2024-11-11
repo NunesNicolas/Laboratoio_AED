@@ -2,12 +2,23 @@
 #include <stdlib.h>
 #include "functions.h"
 
-void uniao(struct Node** head, int arrayA[], size_t sizeA, int arrayB[], size_t sizeB) {
-    for (size_t i = 0; i < sizeA; i++) {
-        insertAtBeginning(head, arrayA[i]);
+void intersecao(struct Node** head, int arrayA[], int arrayB[], size_t sizeA, size_t sizeB) {
+    size_t i = 0, j = 0; // Use size_t for indices
+
+    while (i < sizeA && j < sizeB) {
+        if (arrayA[i] < arrayB[j]) {
+            insertAtBeginning(head, arrayA[i]);
+            i++;
+        } else if (arrayA[i] > arrayB[j]) {
+            insertAtBeginning(head, arrayB[j]);
+            j++;
+        } else {
+            // If they are equal, insert only once
+            insertAtBeginning(head, arrayA[i]);
+            i++;
+            j++;
+        }
     }
-    for (size_t i = 0; i < sizeB; i++) {
-        insertAtBeginning(head, arrayB[i]);
-    }
-    printList(*head);  // Dereference head to get the actual pointer
+
+    printList(*head);
 }
