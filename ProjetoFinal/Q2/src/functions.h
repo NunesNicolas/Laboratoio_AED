@@ -1,15 +1,15 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-typedef struct
-{
-    long comparacoes;
-    long trocas;
-} Metrics;
+typedef struct {
+    int data;
+    struct Node* next;
+} Node;
 
-void bubbleOptimized(int arr[], int n, Metrics *metrica);
-void bubbleSort(int v[], int n, Metrics *metrica);
-void bucketSort(int V[], int N, Metrics *metrica);
-void bucketOptimized(int V[], int N, Metrics *metrica);
-void insertionSort(int arr[], int n, Metrics *metrica);
+void insertAtBeginning(struct Node** head, int data);
+void printList(struct Node* head);
+void uniao(struct Node** head, int arrayA[], size_t sizeA, int arrayB[], size_t sizeB);
+// void intersecao(struct Node** head, int arrayA[], size_t sizeA, int arrayB[], size_t sizeB);
+
+
 #endif
