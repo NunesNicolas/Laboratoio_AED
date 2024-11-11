@@ -49,7 +49,7 @@ printf("[%d]",elmB[i]);
 }
     do{
 
-printf("\n 1-unir  2-intersecao   9-finalizar \n");
+printf("\n 1-unir  2-intersecao  3-diferenca de A para B  9-finalizar \n");
 scanf("%d", &option);
 
 switch (option)
@@ -60,6 +60,10 @@ case 1:
 
 case 2:
  intersecao(&head, elmA, elmB, sizeof(elmA) / sizeof(elmA[0]), sizeof(elmB) / sizeof(elmB[0]));
+break;
+
+case 3:
+ diferenca(&head, elmA, elmB, sizeof(elmA) / sizeof(elmA[0]), sizeof(elmB) / sizeof(elmB[0]));
 break;
 
 case 9:
