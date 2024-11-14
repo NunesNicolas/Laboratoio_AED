@@ -1,96 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-typedef struct {
-    char nome[50];
-    int senha;
-} Pessoa;
+typedef struct No {
+    int dado;
+    struct No *prox;
+} No;
 
-typedef struct Node {
-    Pessoa pessoa;
-    struct Node *next;
-} Node;
-
-Node *imparHead = NULL;
-Node *parHead = NULL;
-
-// Função para inserir pessoa na lista de espera
-void inserirNaFila(Pessoa novaPessoa) {
-    Node *novo = (Node *)malloc(sizeof(Node));
-    novo->pessoa = novaPessoa;
-    novo->next = NULL;
-
-    if (novaPessoa.senha % 2 == 0) {
-        // Insere na fila de senhas pares
-        if (parHead == NULL) {
-            parHead = novo;
-        } else {
-            Node *temp = parHead;
-            while (temp->next != NULL) {
-                temp = temp->next;
-            }
-            temp->next = novo;
-        }
-    } else {
-        // Insere na fila de senhas ímpares
-        if (imparHead == NULL) {
-            imparHead = novo;
-        } else {
-            Node *temp = imparHead;
-            while (temp->next != NULL) {
-                temp = temp->next;
-            }
-            temp->next = novo;
-        }
-    }
+No* novoNo(int valor) {
+    No *no = (No*) malloc(sizeof(No));
+    no->dado = valor;
+    no->prox = NULL;
+    return no;
 }
 
-// Função para parear pessoas das filas de senhas ímpares e pares
-void formarPares() {
-    while (imparHead != NULL && parHead != NULL) {
-        printf("%s e %s\n", imparHead->pessoa.nome, parHead->pessoa.nome);
-
-        Node *tempImpar = imparHead;
-        Node *tempPar = parHead;
-
-        imparHead = imparHead->next;
-        parHead = parHead->next;
-
-        free(tempImpar);
-        free(tempPar);
-    }
+void empilhar(No **topo, int valor) {
+    No *no = novoNo(valor);
+    no->prox = *topo;
+    *topo = no;
 }
 
-// Função para exibir as pessoas restantes na fila
-void mostrarFila() {
-    Node *temp = imparHead;
-    printf("Pessoas na fila com senha ímpar: ");
-    while (temp != NULL) {
-        printf("%s (senha %d) ", temp->pessoa.nome, temp->pessoa.senha);
-        temp = temp->next;
+int desempilhar(No **topo) {
+    if (*topo == NULL) {
+        printf("Erro: a pilha está vazia!\n");
+        return -1;
+    }
+    No *temp = *topo;
+    int valor = temp->dado;
+    *topo = (*topo)->prox;
+    free(temp);
+    return valor;
+}
+
+void decimalParaBinario(int numero) {
+    No *pilha = NULL;
+
+    if (numero == 0) {
+        printf("Binário: 0\n");
+        return;
+    }
+
+    while (numero > 0) {
+        int resto = numero % 2;
+        empilhar(&pilha, resto);
+        numero /= 2;
+    }
+
+    printf("Binário: ");
+    while (pilha != NULL) {
+        printf("%d", desempilhar(&pilha));
     }
     printf("\n");
 }
 
 int main() {
-    int n;
-    printf("Digite o número de pessoas: ");
-    scanf("%d", &n);
-    getchar(); // Limpar o buffer de entrada
+    int numero;
 
-    for (int i = 0; i < n; i++) {
-        Pessoa novaPessoa;
-        printf("Digite o nome e a senha (ex: Valentina 4): ");
-        scanf("%s %d", novaPessoa.nome, &novaPessoa.senha);
-        getchar(); // Limpar o buffer de entrada
+    printf("Digite um número decimal: ");
+    scanf("%d", &numero);
 
-        inserirNaFila(novaPessoa);
-        formarPares(); // Tentar formar pares com cada nova pessoa adicionada
-    }
-
-    // Exibir a fila final de pessoas não pareadas
-    mostrarFila();
+    decimalParaBinario(numero);
 
     return 0;
 }
