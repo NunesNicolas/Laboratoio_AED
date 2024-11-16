@@ -147,58 +147,81 @@ Node *buildTree25() {
 
 
 int main() {
-    // Construir as árvores
-    Node *tree1 = buildTree1();
-    Node *tree25 = buildTree25();
+    Node *tree1 = NULL;  // Inicializa as árvores
+    Node *tree25 = NULL;
+    int orderTree1 = 0;
+    int orderTree25 = 0;
 
+
+    FILE *file = fopen("D:\\Laboratio_AED\\Laboratoio_AED\\ProjetoFinal\\Q4\\src\\input.txt", "r");
+    if (file == NULL) {
+        fprintf(stderr, "Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    char line[100];
     int id = 0;
-    int captch = 0;
-     Node *arv = NULL;
- 
-    do
-    {
-        printf("digite seu codigo de acesso, ou digite 0 para encerrar o processo: ");
-        scanf("%d", &id);
-        scanf("%d", &captch);
-        getchar();
-        printf("\n [%d] [%d]", id, captch);
-         if (id == 1)
-         {
-           arv = tree1;
-         }else if (captch == 25)
-         {
-           arv = tree25;
-         }
-         
-         
-       switch (id)
-       {
-       case 1:
-       printf("Mensagem escondida: ");
-       printf("[");
-       preorder(arv);
-         printf("]\n");
-        break;
+    int order = 0;
 
-         case 2:
-           printf("Mensagem escondida: ");
-       printf("[");
-        inorder(arv);
-          printf("]\n");
-        break;
+    // Lê as linhas do arquivo
+    while (fgets(line, sizeof(line), file)) {
+        // Remove o caractere de nova linha, se presente
+        line[strcspn(line, "\n")] = 0;
 
-         case 3:
-           printf("Mensagem escondida: ");
-       printf("[");
-        postorder(arv);
-          printf("]\n");
-        break;
-       
-       default:
-        break;
-       }
-    } while (id != 4);
-    printf("FINALIZANDO...");
+        // Verifica se a linha é para selecionar a árvore ou inserir um nó
+        if (sscanf(line, "%d,%d", &id, &order) == 2) {
+            if (id == 1) {
+                orderTree1 = order; // Armazena a ordem para a árvore 1
+                tree1 = NULL; // Reinicializa a árvore 1
+            } else if (id == 25) {
+                orderTree25 = order; // Armazena a ordem para a árvore 25
+                tree25 = NULL; // Reinicializa a árvore 25
+            }
+        } else {
+                // Se a linha for do tipo "ID árvore AVL, caractere, chave"
+            int key;
+            char data;
+            int treeId;
 
+            if (sscanf(line, "%d,%c,%d", &treeId, &data, &key) == 3) {
+                if (treeId == 1) {
+                    tree1 = insert(tree1, data, key);
+                } else if (treeId == 25) {
+                    tree25 = insert(tree25, data, key);
+                } else {
+                    printf("ID de árvore inválido.\n");
+                }
+            } else {
+                printf("Formato de entrada inválido: %s\n", line);
+            }
+        }
+    }
+
+    fclose(file); // Fecha o arquivo
+
+    // Imprime a mensagem escondida na ordem especificada
+    printf("Mensagem escondida: [");
+    if (order == 1) {
+        preorder(tree1); // Imprime a árvore 1 em pré-ordem
+    } else if (order == 2) {
+        inorder(tree1); // Imprime a árvore 1 em em-ordem
+    } else if (order == 3) {
+        postorder(tree1); // Imprime a árvore 1 em pós-ordem
+    } else {
+        printf("Ordem inválida.\n");
+    }
+    printf(" ");
+    if (orderTree25 == 1) {
+    preorder(tree25); // Imprime a árvore 25 em pré-ordem
+} else if (orderTree25 == 2) {
+    inorder(tree25); // Imprime a árvore 25 em em-ordem
+} else if (orderTree25 == 3) {
+    postorder(tree25); // Imprime a árvore 25 em pós-ordem
+} else {
+    printf("Ordem inválida.\n");
+}
+    printf("]\n");
+
+    printf("FINALIZANDO...\n");
     return 0;
 }
